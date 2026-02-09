@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Student Admission Queue System</title>
+    <title>Hospital Management System - MediCare</title>
     <style>
         * {
             margin: 0;
@@ -12,569 +12,1320 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Georgia', serif;
+            background-color: #f9fafb;
+            color: #333;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* LOGIN PAGE */
+        .login-container {
             min-height: 100vh;
+            background: linear-gradient(135deg, #2563eb 0%, #a855f7 50%, #ec4899 100%);
             display: flex;
-            justify-content: center;
             align-items: center;
-            padding: 20px;
-            overflow-x: hidden;
-        }
-
-        .container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 900px;
-            width: 100%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: slideIn 0.6s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            position: relative;
-        }
-
-        .header h1 {
-            font-size: 2.5em;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 10px;
-            animation: fadeIn 0.8s ease-out;
-        }
-
-        .stats {
-            display: flex;
             justify-content: center;
-            gap: 30px;
-            margin-bottom: 30px;
-            animation: fadeIn 1s ease-out;
+            padding: 20px;
         }
 
-        .stat-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .login-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            max-width: 1200px;
+            width: 100%;
+            align-items: center;
+        }
+
+        .login-left {
             color: white;
-            padding: 20px 30px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-            transition: transform 0.3s ease;
         }
 
-        .stat-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .stat-number {
-            font-size: 2.5em;
+        .login-left h1 {
+            font-size: 3.5rem;
             font-weight: bold;
-            display: block;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
-        .stat-label {
-            font-size: 0.9em;
+        .login-left h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        .login-left p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
             opacity: 0.9;
         }
 
-        .controls {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
+        .login-left ul {
+            list-style: none;
         }
 
-        .input-group {
-            flex: 1;
-            min-width: 250px;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1em;
-            transition: all 0.3s ease;
-        }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .btn {
-            padding: 15px 30px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn:before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .btn:hover:before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            color: white;
-        }
-
-        .btn-danger {
-            background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
-            color: white;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none !important;
-        }
-
-        .queue-container {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 30px;
-            min-height: 300px;
-            position: relative;
-        }
-
-        .queue-title {
-            font-size: 1.5em;
-            margin-bottom: 20px;
-            color: #333;
+        .login-left li {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .queue-items {
+        .login-form {
+            background: white;
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 450px;
+        }
+
+        .login-form h3 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #7c3aed;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 15px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #2563eb, #7c3aed);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #333;
+            border: 2px solid #e5e7eb;
+        }
+
+        .btn-secondary:hover {
+            background: #f3f4f6;
+        }
+
+        .form-divider {
+            text-align: center;
+            margin: 20px 0;
+            color: #999;
+        }
+
+        .form-link {
+            text-align: center;
+            color: #666;
+        }
+
+        .form-link a {
+            color: #7c3aed;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* DASHBOARD */
+        .dashboard {
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(90deg, #2563eb, #7c3aed);
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            text-align: right;
+        }
+
+        .user-name {
+            font-weight: bold;
+        }
+
+        .user-email {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .btn-logout {
+            background: #dc2626;
+            color: white;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-logout:hover {
+            background: #b91c1c;
+        }
+
+        .nav-tabs {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 0 40px;
+            display: flex;
+            gap: 40px;
+            position: sticky;
+            top: 60px;
+            z-index: 50;
+        }
+
+        .nav-tab {
+            padding: 15px 0;
+            cursor: pointer;
+            font-weight: bold;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .nav-tab.active {
+            border-bottom-color: #7c3aed;
+            color: #7c3aed;
+        }
+
+        .nav-tab:hover {
+            color: #7c3aed;
+        }
+
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* BOOKING TAB */
+        .search-box {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .doctors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .doctor-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .doctor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+
+        .doctor-header {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .doctor-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .doctor-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .doctor-body {
+            padding: 20px;
+        }
+
+        .doctor-spec {
+            font-weight: bold;
+            color: #666;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .booked-badge {
+            background: #10b981;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .doctor-info {
+            font-size: 0.95rem;
+            color: #666;
+            margin: 10px 0;
+        }
+
+        .btn-book {
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(90deg, #2563eb, #7c3aed);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .btn-book:hover {
+            opacity: 0.9;
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .modal-form {
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
 
-        .queue-item {
+        .modal-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn-confirm {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-confirm:hover {
+            background: #059669;
+        }
+
+        .btn-cancel {
+            background: #d1d5db;
+            color: #333;
+        }
+
+        .btn-cancel:hover {
+            background: #9ca3af;
+        }
+
+        /* CHAT */
+        .chat-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 25px;
+            height: 600px;
+        }
+
+        .chat-sidebar {
             background: white;
+            border-radius: 15px;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow-y: auto;
+        }
+
+        .chat-doctors-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .doctor-option {
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            background: #f3f4f6;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .doctor-option:hover {
+            background: #e5e7eb;
+        }
+
+        .doctor-option.active {
+            background: #7c3aed;
+            color: white;
+        }
+
+        .doctor-option-name {
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+
+        .doctor-option-spec {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .chat-window {
+            background: white;
+            border-radius: 15px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            animation: slideInRight 0.5s ease-out;
-            transition: all 0.3s ease;
-            position: relative;
+            flex-direction: column;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             overflow: hidden;
         }
 
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .queue-item:hover {
-            transform: translateX(10px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        .queue-item.removing {
-            animation: slideOutLeft 0.5s ease-out forwards;
-        }
-
-        @keyframes slideOutLeft {
-            to {
-                opacity: 0;
-                transform: translateX(-100%);
-            }
-        }
-
-        .queue-item.admitting {
-            animation: admit 0.8s ease-out forwards;
-        }
-
-        @keyframes admit {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-                background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-                color: white;
-            }
-            100% {
-                opacity: 0;
-                transform: translateX(-100%) scale(0.8);
-            }
-        }
-
-        .queue-position {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .chat-header {
+            background: linear-gradient(90deg, #2563eb, #7c3aed);
             color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2em;
+            padding: 20px;
         }
 
-        .queue-name {
+        .chat-messages {
             flex: 1;
-            margin-left: 20px;
-            font-size: 1.1em;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f9fafb;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            display: flex;
+            gap: 10px;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message-bubble {
+            max-width: 70%;
+            padding: 12px 15px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+        }
+
+        .message.user .message-bubble {
+            background: #7c3aed;
+            color: white;
+            border-bottom-right-radius: 0;
+        }
+
+        .message.doctor .message-bubble {
+            background: #e5e7eb;
             color: #333;
-            font-weight: 500;
+            border-bottom-left-radius: 0;
+        }
+
+        .chat-input-area {
+            border-top: 1px solid #e5e7eb;
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: #7c3aed;
+        }
+
+        .btn-send {
+            padding: 10px 20px;
+            background: #7c3aed;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-send:hover {
+            background: #6d28d9;
+        }
+
+        /* SCHEMES */
+        .schemes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .scheme-card {
+            background: linear-gradient(135deg, #10b981, #3b82f6);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .scheme-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+
+        .scheme-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .scheme-discount {
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .discount-label {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .discount-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .scheme-features {
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .scheme-coverage {
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .btn-apply {
+            width: 100%;
+            padding: 10px;
+            background: white;
+            color: #2563eb;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-apply:hover {
+            background: #f0f9ff;
+        }
+
+        /* APPOINTMENTS & APPLICATIONS */
+        .list-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .list-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: linear-gradient(135deg, #f0fdf4, #eff6ff);
+            border-left: 4px solid #10b981;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .item-details h4 {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .item-details p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .status-badge {
+            background: #10b981;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.85rem;
         }
 
         .empty-state {
             text-align: center;
-            padding: 60px 20px;
+            padding: 40px;
             color: #999;
-            animation: fadeIn 0.5s ease-out;
         }
 
-        .empty-state-icon {
-            font-size: 4em;
-            margin-bottom: 20px;
-            opacity: 0.3;
-        }
-
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 20px 30px;
-            border-radius: 10px;
-            color: white;
-            font-weight: 600;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            animation: slideInFromRight 0.5s ease-out, slideOutToRight 0.5s ease-out 2.5s forwards;
-            z-index: 1000;
-            max-width: 350px;
-        }
-
-        @keyframes slideInFromRight {
-            from {
-                transform: translateX(400px);
-                opacity: 0;
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .login-wrapper {
+                grid-template-columns: 1fr;
+                gap: 30px;
             }
-            to {
-                transform: translateX(0);
-                opacity: 1;
+
+            .login-left {
+                display: none;
+            }
+
+            .chat-container {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            .doctors-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            .schemes-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             }
         }
 
-        @keyframes slideOutToRight {
-            to {
-                transform: translateX(400px);
-                opacity: 0;
+        @media (max-width: 640px) {
+            .login-form {
+                padding: 25px;
             }
-        }
 
-        .notification.success {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-        }
-
-        .notification.error {
-            background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
-        }
-
-        .notification.info {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
+            .login-left h1 {
+                font-size: 2rem;
             }
-            to {
-                opacity: 1;
-            }
-        }
 
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
 
-        .particle {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            animation: float 15s infinite;
-        }
+            .nav-tabs {
+                overflow-x: auto;
+                padding: 0 15px;
+            }
 
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0;
+            .content {
+                padding: 15px 10px;
             }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
 
-        .next-badge {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.8em;
-            font-weight: bold;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
+            .doctors-grid {
+                grid-template-columns: 1fr;
             }
-            50% {
-                transform: scale(1.05);
+
+            .schemes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .message-bubble {
+                max-width: 90%;
             }
         }
     </style>
 </head>
 <body>
-    <div class="particles" id="particles"></div>
-    
-    <div class="container">
-        <div class="header">
-            <h1>🎓 Ultimate Student Admission Queue</h1>
-            <p style="color: #666; margin-top: 10px;">Manage your admission process with style!</p>
-        </div>
 
-        <div class="stats">
-            <div class="stat-card">
-                <span class="stat-number" id="totalCount">0</span>
-                <span class="stat-label">In Queue</span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number" id="admittedCount">0</span>
-                <span class="stat-label">Admitted</span>
-            </div>
+<!-- LOGIN PAGE -->
+<div id="loginPage" class="login-container">
+    <div class="login-wrapper">
+        <div class="login-left">
+            <h1>❤️ MediCare</h1>
+            <h2>Your Health, Our Priority</h2>
+            <p>Book appointments with top doctors, get instant health consultations, and manage your medical records all in one place.</p>
+            <ul>
+                <li>✓ 24/7 Doctor Availability</li>
+                <li>✓ Instant Health Consultations</li>
+                <li>✓ Affordable Healthcare Plans</li>
+            </ul>
         </div>
-
-        <div class="controls">
-            <div class="input-group">
-                <input type="text" id="studentName" placeholder="Enter student name..." autocomplete="off">
-            </div>
-            <button class="btn btn-primary" onclick="addStudent()">➕ Add Student</button>
-            <button class="btn btn-success" onclick="admitStudent()" id="admitBtn" disabled>✅ Admit Next</button>
-            <button class="btn btn-danger" onclick="clearQueue()">🗑️ Clear All</button>
-        </div>
-
-        <div class="queue-container">
-            <div class="queue-title">
-                📋 Admission Queue
-            </div>
-            <div class="queue-items" id="queueItems">
-                <div class="empty-state">
-                    <div class="empty-state-icon">📭</div>
-                    <p>No students in queue yet. Add some students to get started!</p>
+        <div class="login-form">
+            <h3>Welcome</h3>
+            <div id="loginForm">
+                <div class="form-group">
+                    <input type="email" id="loginEmail" placeholder="Email address" required>
                 </div>
+                <div class="form-group">
+                    <input type="password" id="loginPass" placeholder="Password" required>
+                </div>
+                <button class="btn btn-primary" onclick="handleLogin()">Sign In</button>
+            </div>
+
+            <div class="form-divider">Or continue with</div>
+
+            <button class="btn btn-secondary" onclick="handleGoogleLogin()">🔵 Google Account</button>
+
+            <div class="form-link">
+                Don't have an account? <a onclick="showRegister()">Sign up</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- REGISTER PAGE -->
+<div id="registerPage" class="login-container hidden">
+    <div class="login-wrapper">
+        <div class="login-form" style="max-width: 100%; grid-column: 1/2;">
+            <h3>Create Account</h3>
+            <div class="form-group">
+                <input type="text" id="regName" placeholder="Full name" required>
+            </div>
+            <div class="form-group">
+                <input type="email" id="regEmail" placeholder="Email address" required>
+            </div>
+            <div class="form-group">
+                <input type="tel" id="regPhone" placeholder="Phone number" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="regPass" placeholder="Password" required>
+            </div>
+            <button class="btn btn-primary" onclick="handleRegister()">Create Account</button>
+
+            <div class="form-link">
+                Already have an account? <a onclick="showLogin()">Sign in</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="dashboard hidden">
+    <div class="header">
+        <div class="header-left">
+            ❤️ MediCare
+        </div>
+        <div class="header-right">
+            <div class="user-info">
+                <div class="user-name" id="userName">User</div>
+                <div class="user-email" id="userEmail">email@example.com</div>
+            </div>
+            <button class="btn-logout" onclick="handleLogout()">Logout</button>
+        </div>
+    </div>
+
+    <div class="nav-tabs">
+        <div class="nav-tab active" onclick="switchTab('booking')">🏥 Book Appointment</div>
+        <div class="nav-tab" onclick="switchTab('chat')">💬 Health Consultation</div>
+        <div class="nav-tab" onclick="switchTab('schemes')">💊 Health Schemes</div>
+    </div>
+
+    <div class="content">
+        <!-- BOOKING TAB -->
+        <div id="bookingTab" class="hidden">
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search by doctor name or specialization..." onkeyup="filterDoctors()">
+            </div>
+
+            <div class="doctors-grid" id="doctorsGrid">
+                <!-- Doctors will be populated here -->
+            </div>
+
+            <div class="list-section" id="appointmentsSection" style="display: none;">
+                <h3 class="list-title">Your Appointments</h3>
+                <div id="appointmentsList"></div>
+            </div>
+        </div>
+
+        <!-- CHAT TAB -->
+        <div id="chatTab" class="hidden">
+            <div class="chat-container">
+                <div class="chat-sidebar">
+                    <div class="chat-doctors-title">Available Doctors</div>
+                    <div id="chatDoctorsList"></div>
+                </div>
+                <div class="chat-window">
+                    <div id="noChatSelected" style="flex: 1; display: flex; align-items: center; justify-content: center; color: #999;">
+                        Select a doctor to start consulting
+                    </div>
+                    <div id="chatContent" style="display: none; flex: 1; display: flex; flex-direction: column;">
+                        <div class="chat-header">
+                            <div style="font-size: 1.1rem; font-weight: bold;" id="chatDoctorName">Dr. Name</div>
+                            <div style="font-size: 0.9rem; opacity: 0.8;" id="chatDoctorSpec">Specialization</div>
+                        </div>
+                        <div class="chat-messages" id="chatMessages"></div>
+                        <div class="chat-input-area">
+                            <input type="text" class="chat-input" id="chatInput" placeholder="Describe your symptoms (fever, cold, headache, infection)..." onkeypress="handleChatKeyPress(event)">
+                            <button class="btn-send" onclick="sendMessage()">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCHEMES TAB -->
+        <div id="schemesTab" class="hidden">
+            <div class="schemes-grid" id="schemesGrid">
+                <!-- Schemes will be populated here -->
+            </div>
+
+            <div class="list-section" id="applicationsSection" style="display: none;">
+                <h3 class="list-title">Your Applications</h3>
+                <div id="applicationsList"></div>
             </div>
         </div>
     </div>
 
-    <script>
-        let queue = [];
-        let admittedCount = 0;
+    <!-- BOOKING MODAL -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-title" id="bookingTitle">Book Appointment</h2>
+            <div class="modal-form">
+                <div class="form-group">
+                    <label>Select Date</label>
+                    <input type="date" id="bookingDate" class="search-input">
+                </div>
+                <div class="form-group">
+                    <label>Select Time</label>
+                    <select id="bookingTime" class="search-input">
+                        <option>Select a time</option>
+                        <option>09:00 AM</option>
+                        <option>10:00 AM</option>
+                        <option>11:00 AM</option>
+                        <option>02:00 PM</option>
+                        <option>03:00 PM</option>
+                        <option>04:00 PM</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-confirm" onclick="confirmBooking()">Confirm Booking</button>
+                <button class="btn btn-cancel" onclick="closeBookingModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
 
-        // Create floating particles
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            for (let i = 0; i < 20; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.width = particle.style.height = Math.random() * 10 + 5 + 'px';
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                particle.style.animationDuration = Math.random() * 10 + 10 + 's';
-                particlesContainer.appendChild(particle);
-            }
+    <!-- SCHEME APPLICATION MODAL -->
+    <div id="schemeModal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-title" id="schemeTitle">Apply for Scheme</h2>
+            <div class="modal-form">
+                <input type="text" id="schemeName" class="search-input" placeholder="Full name" required>
+                <input type="email" id="schemeEmail" class="search-input" placeholder="Email" required>
+                <input type="tel" id="schemePhone" class="search-input" placeholder="Phone" required>
+                <input type="number" id="schemeAge" class="search-input" placeholder="Age" required>
+                <input type="number" id="schemeIncome" class="search-input" placeholder="Annual Income" required>
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-confirm" onclick="submitSchemeApplication()">Submit Application</button>
+                <button class="btn btn-cancel" onclick="closeSchemeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Data
+    const doctors = [
+        {id:1, name:'Dr. Rajesh Kumar', spec:'Cardiologist', exp:12, rating:4.8, avail:'Mon-Fri 9AM-5PM', icon:'❤️'},
+        {id:2, name:'Dr. Priya Sharma', spec:'Pediatrician', exp:8, rating:4.9, avail:'Tue-Sat 10AM-6PM', icon:'👶'},
+        {id:3, name:'Dr. Amit Patel', spec:'Neurologist', exp:15, rating:4.7, avail:'Mon-Wed 8AM-4PM', icon:'🧠'},
+        {id:4, name:'Dr. Neha Singh', spec:'Dermatologist', exp:7, rating:4.9, avail:'Wed-Sat 11AM-7PM', icon:'💆'},
+        {id:5, name:'Dr. Vikram Desai', spec:'Orthopedic Surgeon', exp:18, rating:4.8, avail:'Mon-Fri 9AM-5PM', icon:'🦴'},
+        {id:6, name:'Dr. Anjali Gupta', spec:'Gynecologist', exp:11, rating:4.9, avail:'Tue-Sat 10AM-6PM', icon:'👩‍⚕️'},
+        {id:7, name:'Dr. Suresh Nair', spec:'Dentist', exp:10, rating:4.7, avail:'Mon-Sat 9AM-5PM', icon:'🦷'},
+        {id:8, name:'Dr. Meera Khanna', spec:'Psychiatrist', exp:14, rating:4.8, avail:'Mon-Fri 2PM-8PM', icon:'🧠'},
+        {id:9, name:'Dr. Arjun Bansal', spec:'Ophthalmologist', exp:9, rating:4.7, avail:'Tue-Fri 10AM-6PM', icon:'👁️'},
+        {id:10, name:'Dr. Kavya Reddy', spec:'Endocrinologist', exp:13, rating:4.9, avail:'Wed-Fri 11AM-7PM', icon:'⚕️'}
+    ];
+
+    const schemes = [
+        {id:1, name:'Health Plus Premium', discount:30, features:'Free annual checkup, 50% discount on medicines', coverage:'₹5,00,000'},
+        {id:2, name:'Family Care Package', discount:25, features:'Covers entire family, Free dental checkup', coverage:'₹10,00,000'},
+        {id:3, name:'Senior Citizens Special', discount:40, features:'Free medication, Priority appointments', coverage:'₹7,50,000'},
+        {id:4, name:'Student Health Plan', discount:20, features:'Affordable coverage, Mental health support', coverage:'₹2,50,000'},
+        {id:5, name:'Corporate Wellness', discount:35, features:'Employee coverage, Preventive care', coverage:'₹15,00,000'}
+    ];
+
+    const healthAdvice = {
+        fever: 'For fever: Stay hydrated, take rest, use paracetamol as needed. Monitor temperature. If it persists beyond 3 days or exceeds 104°F, visit the hospital immediately.',
+        cold: 'For common cold: Get plenty of rest, drink warm fluids, use a humidifier. Take vitamin C supplements. Avoid close contact with others.',
+        headache: 'For headache: Rest in a dark room, apply a cold/warm compress, stay hydrated. Try over-the-counter pain relievers. Consult if severe or persistent.',
+        infection: 'For infection: Use separate medical soap and keep the area clean. Wash with boiled water. Avoid touching the infected area. Visit the hospital if it worsens.'
+    };
+
+    // State
+    let currentUser = null;
+    let selectedDoctor = null;
+    let selectedChat = null;
+    let selectedScheme = null;
+    let appointments = [];
+    let chatMessages = [];
+    let applications = [];
+
+    // Login/Register Functions
+    function handleLogin() {
+        const email = document.getElementById('loginEmail').value;
+        const pass = document.getElementById('loginPass').value;
+        
+        if(email && pass) {
+            currentUser = {
+                name: email.split('@')[0],
+                email: email
+            };
+            showDashboard();
+        } else {
+            alert('Please fill in all fields');
         }
+    }
 
-        function showNotification(message, type = 'success') {
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.textContent = message;
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.remove();
-            }, 3000);
+    function handleRegister() {
+        const name = document.getElementById('regName').value;
+        const email = document.getElementById('regEmail').value;
+        const phone = document.getElementById('regPhone').value;
+        const pass = document.getElementById('regPass').value;
+        
+        if(name && email && phone && pass) {
+            currentUser = {
+                name: name,
+                email: email
+            };
+            showDashboard();
+        } else {
+            alert('Please fill in all fields');
         }
+    }
 
-        function updateStats() {
-            document.getElementById('totalCount').textContent = queue.length;
-            document.getElementById('admittedCount').textContent = admittedCount;
-            document.getElementById('admitBtn').disabled = queue.length === 0;
-        }
+    function handleGoogleLogin() {
+        currentUser = {
+            name: 'Google User',
+            email: 'user@gmail.com'
+        };
+        showDashboard();
+    }
 
-        function renderQueue() {
-            const container = document.getElementById('queueItems');
-            
-            if (queue.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">📭</div>
-                        <p>No students in queue yet. Add some students to get started!</p>
+    function handleLogout() {
+        currentUser = null;
+        document.getElementById('loginEmail').value = '';
+        document.getElementById('loginPass').value = '';
+        document.getElementById('loginPage').classList.remove('hidden');
+        document.getElementById('registerPage').classList.add('hidden');
+        document.getElementById('dashboard').classList.add('hidden');
+    }
+
+    function showLogin() {
+        document.getElementById('loginPage').classList.remove('hidden');
+        document.getElementById('registerPage').classList.add('hidden');
+    }
+
+    function showRegister() {
+        document.getElementById('loginPage').classList.add('hidden');
+        document.getElementById('registerPage').classList.remove('hidden');
+    }
+
+    function showDashboard() {
+        document.getElementById('loginPage').classList.add('hidden');
+        document.getElementById('registerPage').classList.add('hidden');
+        document.getElementById('dashboard').classList.remove('hidden');
+        
+        document.getElementById('userName').textContent = currentUser.name;
+        document.getElementById('userEmail').textContent = currentUser.email;
+        
+        initializeDoctors();
+        initializeChatDoctors();
+        initializeSchemes();
+    }
+
+    // Tab Switching
+    function switchTab(tab) {
+        // Hide all tabs
+        document.getElementById('bookingTab').classList.add('hidden');
+        document.getElementById('chatTab').classList.add('hidden');
+        document.getElementById('schemesTab').classList.add('hidden');
+        
+        // Remove active from all tabs
+        document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+        
+        // Show selected tab
+        document.getElementById(tab + 'Tab').classList.remove('hidden');
+        
+        // Add active to clicked tab
+        event.target.classList.add('active');
+    }
+
+    // Doctor Booking
+    function initializeDoctors() {
+        const grid = document.getElementById('doctorsGrid');
+        grid.innerHTML = doctors.map(doctor => {
+            const isBooked = appointments.some(a => a.doctorId === doctor.id);
+            return `
+                <div class="doctor-card">
+                    <div class="doctor-header">
+                        <div class="doctor-icon">${doctor.icon}</div>
+                        <div class="doctor-name">${doctor.name}</div>
                     </div>
-                `;
-                return;
-            }
+                    <div class="doctor-body">
+                        <div class="doctor-spec">
+                            <span>${doctor.spec}</span>
+                            ${isBooked ? '<span class="booked-badge">✓ Booked</span>' : ''}
+                        </div>
+                        <div class="doctor-info"><strong>Experience:</strong> ${doctor.exp} years</div>
+                        <div class="doctor-info"><strong>Rating:</strong> ⭐ ${doctor.rating}/5.0</div>
+                        <div class="doctor-info"><strong>Availability:</strong> ${doctor.avail}</div>
+                        <button class="btn-book" onclick="openBookingModal(${doctor.id}, '${doctor.name}')">Book Appointment</button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
 
-            container.innerHTML = '';
-            queue.forEach((name, index) => {
-                const item = document.createElement('div');
-                item.className = 'queue-item';
-                item.innerHTML = `
-                    <div class="queue-position">${index + 1}</div>
-                    <div class="queue-name">${name}</div>
-                    ${index === 0 ? '<span class="next-badge">NEXT</span>' : ''}
-                `;
-                container.appendChild(item);
-            });
+    function filterDoctors() {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        const filtered = doctors.filter(d => 
+            d.name.toLowerCase().includes(query) || 
+            d.spec.toLowerCase().includes(query)
+        );
+        
+        const grid = document.getElementById('doctorsGrid');
+        grid.innerHTML = filtered.map(doctor => {
+            const isBooked = appointments.some(a => a.doctorId === doctor.id);
+            return `
+                <div class="doctor-card">
+                    <div class="doctor-header">
+                        <div class="doctor-icon">${doctor.icon}</div>
+                        <div class="doctor-name">${doctor.name}</div>
+                    </div>
+                    <div class="doctor-body">
+                        <div class="doctor-spec">
+                            <span>${doctor.spec}</span>
+                            ${isBooked ? '<span class="booked-badge">✓ Booked</span>' : ''}
+                        </div>
+                        <div class="doctor-info"><strong>Experience:</strong> ${doctor.exp} years</div>
+                        <div class="doctor-info"><strong>Rating:</strong> ⭐ ${doctor.rating}/5.0</div>
+                        <div class="doctor-info"><strong>Availability:</strong> ${doctor.avail}</div>
+                        <button class="btn-book" onclick="openBookingModal(${doctor.id}, '${doctor.name}')">Book Appointment</button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function openBookingModal(doctorId, doctorName) {
+        selectedDoctor = doctorId;
+        document.getElementById('bookingTitle').textContent = `Book with ${doctorName}`;
+        document.getElementById('bookingModal').classList.add('active');
+    }
+
+    function closeBookingModal() {
+        document.getElementById('bookingModal').classList.remove('active');
+        document.getElementById('bookingDate').value = '';
+        document.getElementById('bookingTime').value = '';
+    }
+
+    function confirmBooking() {
+        const date = document.getElementById('bookingDate').value;
+        const time = document.getElementById('bookingTime').value;
+        
+        if(!date || !time) {
+            alert('Please select both date and time');
+            return;
         }
-
-        function addStudent() {
-            const input = document.getElementById('studentName');
-            const name = input.value.trim();
-            
-            if (!name) {
-                showNotification('⚠️ Please enter a student name!', 'error');
-                input.focus();
-                return;
-            }
-
-            queue.push(name);
-            input.value = '';
-            input.focus();
-            
-            showNotification(`✅ ${name} added to the queue!`, 'success');
-            updateStats();
-            renderQueue();
-        }
-
-        function admitStudent() {
-            if (queue.length === 0) {
-                showNotification('⚠️ No students in the queue!', 'error');
-                return;
-            }
-
-            const items = document.querySelectorAll('.queue-item');
-            if (items.length > 0) {
-                items[0].classList.add('admitting');
-            }
-
-            setTimeout(() => {
-                const name = queue.shift();
-                admittedCount++;
-                
-                showNotification(`🎓 ${name} has been admitted!`, 'info');
-                updateStats();
-                renderQueue();
-            }, 800);
-        }
-
-        function clearQueue() {
-            if (queue.length === 0) {
-                showNotification('⚠️ Queue is already empty!', 'error');
-                return;
-            }
-
-            const items = document.querySelectorAll('.queue-item');
-            items.forEach((item, index) => {
-                setTimeout(() => {
-                    item.classList.add('removing');
-                }, index * 100);
-            });
-
-            setTimeout(() => {
-                const count = queue.length;
-                queue = [];
-                showNotification(`🗑️ Cleared ${count} student(s) from queue!`, 'info');
-                updateStats();
-                renderQueue();
-            }, items.length * 100 + 500);
-        }
-
-        // Handle Enter key
-        document.getElementById('studentName').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                addStudent();
-            }
+        
+        const doctor = doctors.find(d => d.id === selectedDoctor);
+        appointments.push({
+            id: Date.now(),
+            doctorId: selectedDoctor,
+            doctorName: doctor.name,
+            spec: doctor.spec,
+            date: date,
+            time: time
         });
+        
+        alert(`Appointment booked with ${doctor.name} on ${date} at ${time}`);
+        closeBookingModal();
+        initializeDoctors();
+        updateAppointments();
+    }
 
-        // Initialize
-        createParticles();
-        updateStats();
-    </script>
+    function updateAppointments() {
+        if(appointments.length > 0) {
+            document.getElementById('appointmentsSection').style.display = 'block';
+            const list = document.getElementById('appointmentsList');
+            list.innerHTML = appointments.map(apt => `
+                <div class="list-item">
+                    <div class="item-details">
+                        <h4>${apt.doctorName}</h4>
+                        <p>${apt.spec} • ${apt.date} at ${apt.time}</p>
+                    </div>
+                    <div class="status-badge">Confirmed</div>
+                </div>
+            `).join('');
+        }
+    }
+
+    // Chat
+    function initializeChatDoctors() {
+        const list = document.getElementById('chatDoctorsList');
+        list.innerHTML = doctors.slice(0, 5).map(doctor => `
+            <div class="doctor-option" onclick="selectChatDoctor(${doctor.id}, '${doctor.name}', '${doctor.spec}')">
+                <div class="doctor-option-name">${doctor.name}</div>
+                <div class="doctor-option-spec">${doctor.spec}</div>
+            </div>
+        `).join('');
+    }
+
+    function selectChatDoctor(id, name, spec) {
+        selectedChat = id;
+        chatMessages = [];
+        
+        // Update UI
+        document.querySelectorAll('.doctor-option').forEach(el => el.classList.remove('active'));
+        event.target.closest('.doctor-option').classList.add('active');
+        
+        document.getElementById('noChatSelected').style.display = 'none';
+        document.getElementById('chatContent').style.display = 'flex';
+        document.getElementById('chatDoctorName').textContent = name;
+        document.getElementById('chatDoctorSpec').textContent = spec;
+        document.getElementById('chatMessages').innerHTML = '';
+        document.getElementById('chatInput').value = '';
+    }
+
+    function sendMessage() {
+        const text = document.getElementById('chatInput').value;
+        
+        if(!text.trim()) {
+            alert('Please type a message');
+            return;
+        }
+        
+        // User message
+        chatMessages.push({
+            id: Date.now(),
+            text: text,
+            sender: 'user'
+        });
+        
+        displayMessages();
+        document.getElementById('chatInput').value = '';
+        
+        // Doctor response
+        setTimeout(() => {
+            const lower = text.toLowerCase();
+            let response = '';
+            
+            if(lower.includes('fever')) {
+                response = healthAdvice.fever;
+            } else if(lower.includes('cold')) {
+                response = healthAdvice.cold;
+            } else if(lower.includes('headache')) {
+                response = healthAdvice.headache;
+            } else if(lower.includes('infection')) {
+                response = healthAdvice.infection;
+            } else {
+                response = 'I understand your concern. Please provide more details about your symptoms so I can give you better advice.';
+            }
+            
+            chatMessages.push({
+                id: Date.now() + 1,
+                text: response,
+                sender: 'doctor'
+            });
+            
+            displayMessages();
+        }, 500);
+    }
+
+    function displayMessages() {
+        const container = document.getElementById('chatMessages');
+        container.innerHTML = chatMessages.map(msg => `
+            <div class="message ${msg.sender}">
+                <div class="message-bubble">${msg.text}</div>
+            </div>
+        `).join('');
+        
+        container.scrollTop = container.scrollHeight;
+    }
+
+    function handleChatKeyPress(e) {
+        if(e.key === 'Enter') {
+            sendMessage();
+        }
+    }
+
+    // Schemes
+    function initializeSchemes() {
+        const grid = document.getElementById('schemesGrid');
+        grid.innerHTML = schemes.map(scheme => `
+            <div class="scheme-card">
+                <div class="scheme-name">${scheme.name}</div>
+                <div class="scheme-discount">
+                    <div class="discount-label">Discount</div>
+                    <div class="discount-value">${scheme.discount}%</div>
+                </div>
+                <div class="scheme-features">${scheme.features}</div>
+                <div class="scheme-coverage">Coverage: ${scheme.coverage}</div>
+                <button class="btn-apply" onclick="openSchemeModal(${scheme.id}, '${scheme.name}')">Apply Now</button>
+            </div>
+        `).join('');
+    }
+
+    function openSchemeModal(schemeId, schemeName) {
+        selectedScheme = schemeId;
+        document.getElementById('schemeTitle').textContent = `Apply for ${schemeName}`;
+        document.getElementById('schemeName').value = '';
+        document.getElementById('schemeEmail').value = '';
+        document.getElementById('schemePhone').value = '';
+        document.getElementById('schemeAge').value = '';
+        document.getElementById('schemeIncome').value = '';
+        document.getElementById('schemeModal').classList.add('active');
+    }
+
+    function closeSchemeModal() {
+        document.getElementById('schemeModal').classList.remove('active');
+    }
+
+    function submitSchemeApplication() {
+        const name = document.getElementById('schemeName').value;
+        const email = document.getElementById('schemeEmail').value;
+        const phone = document.getElementById('schemePhone').value;
+        const age = document.getElementById('schemeAge').value;
+        const income = document.getElementById('schemeIncome').value;
+        
+        if(!name || !email || !phone || !age || !income) {
+            alert('Please fill in all fields');
+            return;
+        }
+        
+        const scheme = schemes.find(s => s.id === selectedScheme);
+        applications.push({
+            id: Date.now(),
+            schemeName: scheme.name,
+            applicantName: name,
+            applicantEmail: email
+        });
+        
+        alert(`Application submitted for ${scheme.name}`);
+        closeSchemeModal();
+        updateApplications();
+    }
+
+    function updateApplications() {
+        if(applications.length > 0) {
+            document.getElementById('applicationsSection').style.display = 'block';
+            const list = document.getElementById('applicationsList');
+            list.innerHTML = applications.map(app => `
+                <div class="list-item">
+                    <div class="item-details">
+                        <h4>${app.schemeName}</h4>
+                        <p>Applied by ${app.applicantName}</p>
+                    </div>
+                    <div class="status-badge" style="background: #f59e0b;">Pending</div>
+                </div>
+            `).join('');
+        }
+    }
+</script>
+
 </body>
 </html>
